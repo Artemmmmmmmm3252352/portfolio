@@ -4,14 +4,14 @@ import { hasNeonDatabase, neonQuery } from "@/lib/neon";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { ensureUniqueSlug, parseProjectPayload, uploadProjectCover } from "@/lib/project-service";
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const admin = await requireAdminApi();
     if (admin instanceof NextResponse) {
       return admin;
     }
 
-    const { id } = params;
+    const { id } = await params;
     const formData = await request.formData();
     const parsed = parseProjectPayload(formData);
     if (!parsed.ok) {
@@ -126,14 +126,14 @@ export async function PATCH(request: Request, { params }: { params: { id: string
   }
 }
 
-export async function DELETE(_request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const admin = await requireAdminApi();
     if (admin instanceof NextResponse) {
       return admin;
     }
 
-    const { id } = params;
+    const { id } = await params;
     if (hasNeonDatabase()) {
       await neonQuery(
         `

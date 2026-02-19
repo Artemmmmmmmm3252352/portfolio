@@ -3,14 +3,14 @@ import { requireAdminApi } from "@/lib/auth";
 import { hasNeonDatabase, neonQuery } from "@/lib/neon";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
-export async function POST(_request: Request, { params }: { params: { id: string } }) {
+export async function POST(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const admin = await requireAdminApi();
     if (admin instanceof NextResponse) {
       return admin;
     }
 
-    const { id } = params;
+    const { id } = await params;
     if (hasNeonDatabase()) {
       await neonQuery(
         `
