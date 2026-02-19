@@ -8,6 +8,7 @@ import { SITE_COPY } from "@/lib/constants";
 import { getFeaturedProjects, getSiteContent } from "@/lib/data";
 import { resolveLocale } from "@/lib/i18n";
 import { teamPhotoUrl } from "@/lib/storage";
+import type { ProjectView } from "@/types/domain";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: localeParam } = await params;
@@ -63,7 +64,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <div className="projects-frame">
             <h2 className="section-title">{t.ourProjects}</h2>
             <div className="grid projects">
-              {featuredProjects.map((project, index) => (
+              {featuredProjects.map((project: ProjectView, index) => (
                 <Reveal key={project.id} delay={90 + index * 100} y={26}>
                   <ProjectCard locale={locale} project={project} />
                 </Reveal>

@@ -5,7 +5,7 @@ import { Reveal } from "@/components/reveal";
 import { SITE_COPY } from "@/lib/constants";
 import { getPublishedProjects } from "@/lib/data";
 import { resolveLocale } from "@/lib/i18n";
-import { Author } from "@/types/domain";
+import type { Author, ProjectView } from "@/types/domain";
 
 function resolveAuthor(value?: string): "all" | Author {
   if (value === "artem" || value === "nikita") {
@@ -46,7 +46,7 @@ export default async function ProjectsPage({
       </Reveal>
 
       <div className="grid projects">
-        {projects.map((project, index) => (
+        {projects.map((project: ProjectView, index) => (
           <Reveal key={project.id} delay={120 + index * 70} y={26}>
             <ProjectCard locale={locale} project={project} />
           </Reveal>
