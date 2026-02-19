@@ -3,9 +3,10 @@ import Link from "next/link";
 import { ProjectActions } from "@/components/admin/project-actions";
 import { getAdminProjects } from "@/lib/data";
 import { projectCoverUrl } from "@/lib/storage";
+import type { ProjectRow } from "@/types/domain";
 
 export default async function AdminProjectsPage() {
-  const projects = await getAdminProjects();
+  const projects: ProjectRow[] = await getAdminProjects();
 
   return (
     <div>
@@ -30,7 +31,7 @@ export default async function AdminProjectsPage() {
           </tr>
         </thead>
         <tbody>
-          {projects.map((project) => {
+          {projects.map((project: ProjectRow) => {
             const coverUrl = projectCoverUrl(project.cover_path);
 
             return (

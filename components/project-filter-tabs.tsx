@@ -11,7 +11,7 @@ interface ProjectFilterTabsProps {
 export function ProjectFilterTabs({ locale, active }: ProjectFilterTabsProps) {
   return (
     <div className="chip-tabs">
-      {AUTHOR_FILTERS.map((item) => (
+      {AUTHOR_FILTERS.map((item: { value: "all" | Author; label: Record<Locale, string> }) => (
         <Link
           key={item.value}
           className={cn("chip", active === item.value && "active")}

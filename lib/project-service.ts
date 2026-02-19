@@ -23,7 +23,7 @@ export interface ProjectPayload {
 export function parseTags(input: string) {
   return input
     .split(",")
-    .map((tag) => tag.trim())
+    .map((tag: string) => tag.trim())
     .filter(Boolean)
     .slice(0, 10);
 }

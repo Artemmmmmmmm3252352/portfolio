@@ -50,7 +50,7 @@ export default async function ProjectDetailsPage({
           <div className="meta-row" style={{ marginBottom: "1rem" }}>
             <span className="meta-tag meta-author">{AUTHOR_LABEL[project.author][locale]}</span>
             {dateText ? <span className="meta-tag">{dateText}</span> : null}
-            {project.tags.map((tag) => (
+            {project.tags.map((tag: string) => (
               <span className="meta-tag" key={tag}>
                 {tag}
               </span>

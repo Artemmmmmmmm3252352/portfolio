@@ -70,7 +70,7 @@ function mapSiteContent(row: SiteContentRow, locale: Locale): SiteContentView {
   };
 }
 
-async function getNeonSiteContentRow() {
+async function getNeonSiteContentRow(): Promise<SiteContentRow | null> {
   if (!hasNeonDatabase()) {
     return null;
   }
@@ -83,7 +83,7 @@ async function getNeonSiteContentRow() {
   }
 }
 
-async function getNeonPublishedProjects(author: Author | "all") {
+async function getNeonPublishedProjects(author: Author | "all"): Promise<ProjectRow[] | null> {
   if (!hasNeonDatabase()) {
     return null;
   }
@@ -115,7 +115,7 @@ async function getNeonPublishedProjects(author: Author | "all") {
   }
 }
 
-export async function getSiteContent(locale: Locale) {
+export async function getSiteContent(locale: Locale): Promise<SiteContentView> {
   const neonContent = await getNeonSiteContentRow();
   if (neonContent) {
     return mapSiteContent(neonContent, locale);
@@ -125,10 +125,10 @@ export async function getSiteContent(locale: Locale) {
   return mapSiteContent((data as SiteContentRow | null) ?? FALLBACK_CONTENT, locale);
 }
 
-export async function getPublishedProjects(locale: Locale, author: Author | "all" = "all") {
+export async function getPublishedProjects(locale: Locale, author: Author | "all" = "all"): Promise<ProjectView[]> {
   const neonRows = await getNeonPublishedProjects(author);
   if (neonRows) {
-    return neonRows.map((row) => mapProject(row, locale));
+    return neonRows.map((row: ProjectRow) => mapProject(row, locale));
   }
 
   let query = publicDb
@@ -144,10 +144,10 @@ export async function getPublishedProjects(locale: Locale, author: Author | "all
   }
 
   const { data } = await query;
-  return ((data ?? []) as ProjectRow[]).map((row) => mapProject(row, locale));
+  return ((data ?? []) as ProjectRow[]).map((row: ProjectRow) => mapProject(row, locale));
 }
 
-export async function getFeaturedProjects(locale: Locale, limit = 3) {
+export async function getFeaturedProjects(locale: Locale, limit = 3): Promise<ProjectView[]> {
   if (hasNeonDatabase()) {
     try {
       const { rows } = await neonQuery<ProjectRow>(
@@ -161,7 +161,7 @@ export async function getFeaturedProjects(locale: Locale, limit = 3) {
         ["published", limit]
       );
 
-      return rows.map((row) => mapProject(row, locale));
+      return rows.map((row: ProjectRow) => mapProject(row, locale));
     } catch {
       // fallback to Supabase
     }
@@ -175,10 +175,10 @@ export async function getFeaturedProjects(locale: Locale, limit = 3) {
     .order("published_at", { ascending: false, nullsFirst: false })
     .limit(limit);
 
-  return ((data ?? []) as ProjectRow[]).map((row) => mapProject(row, locale));
+  return ((data ?? []) as ProjectRow[]).map((row: ProjectRow) => mapProject(row, locale));
 }
 
-export async function getPublishedProjectBySlug(locale: Locale, slug: string) {
+export async function getPublishedProjectBySlug(locale: Locale, slug: string): Promise<ProjectView | null> {
   if (hasNeonDatabase()) {
     try {
       const { rows } = await neonQuery<ProjectRow>(
@@ -216,7 +216,7 @@ export async function getPublishedProjectBySlug(locale: Locale, slug: string) {
   return mapProject(data as ProjectRow, locale);
 }
 
-export async function getAdminProjects() {
+export async function getAdminProjects(): Promise<ProjectRow[]> {
   if (hasNeonDatabase()) {
     try {
       const { rows } = await neonQuery<ProjectRow>(
@@ -243,7 +243,7 @@ export async function getAdminProjects() {
   return (data ?? []) as ProjectRow[];
 }
 
-export async function getAdminProjectById(id: string) {
+export async function getAdminProjectById(id: string): Promise<ProjectRow | null> {
   if (hasNeonDatabase()) {
     try {
       const { rows } = await neonQuery<ProjectRow>(
@@ -274,7 +274,7 @@ export async function getAdminProjectById(id: string) {
   return (data as ProjectRow | null) ?? null;
 }
 
-export async function getAdminSiteContent() {
+export async function getAdminSiteContent(): Promise<SiteContentRow> {
   const neonContent = await getNeonSiteContentRow();
   if (neonContent) {
     return neonContent;

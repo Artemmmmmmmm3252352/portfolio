@@ -24,7 +24,7 @@ export function ProjectCard({ locale, project }: ProjectCardProps) {
         <p className="project-excerpt">{project.excerpt}</p>
         <div className="meta-row">
           <span className="meta-tag meta-author">{AUTHOR_LABEL[project.author][locale]}</span>
-          {project.tags.slice(0, 3).map((tag) => (
+          {project.tags.slice(0, 3).map((tag: string) => (
             <span className="meta-tag" key={tag}>
               {tag}
             </span>

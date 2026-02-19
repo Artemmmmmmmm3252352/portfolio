@@ -29,7 +29,7 @@ export const env = {
   adminSessionSecret: process.env.ADMIN_SESSION_SECRET ?? "local-admin-session-secret",
   allowedAdminEmails: (process.env.ADMIN_ALLOWED_EMAILS ?? "")
     .split(",")
-    .map((value) => value.trim().toLowerCase())
+    .map((value: string) => value.trim().toLowerCase())
     .filter(Boolean),
   resendApiKey: process.env.RESEND_API_KEY ?? "",
   resendFrom: process.env.RESEND_FROM_EMAIL ?? "Portfolio Studio <no-reply@example.com>"

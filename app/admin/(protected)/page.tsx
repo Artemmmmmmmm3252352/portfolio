@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { getAdminProjects } from "@/lib/data";
+import type { ProjectRow } from "@/types/domain";
 
 export default async function AdminDashboardPage() {
-  const projects = await getAdminProjects();
-  const published = projects.filter((item) => item.status === "published").length;
-  const drafts = projects.filter((item) => item.status === "draft").length;
-  const hidden = projects.filter((item) => item.status === "hidden").length;
+  const projects: ProjectRow[] = await getAdminProjects();
+  const published = projects.filter((item: ProjectRow) => item.status === "published").length;
+  const drafts = projects.filter((item: ProjectRow) => item.status === "draft").length;
+  const hidden = projects.filter((item: ProjectRow) => item.status === "hidden").length;
 
   return (
     <div>
