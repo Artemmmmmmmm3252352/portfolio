@@ -64,7 +64,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <div className="projects-frame">
             <h2 className="section-title">{t.ourProjects}</h2>
             <div className="grid projects">
-              {featuredProjects.map((project: ProjectView, index) => (
+              {featuredProjects.map((project: ProjectView, index: number) => (
                 <Reveal key={project.id} delay={90 + index * 100} y={26}>
                   <ProjectCard locale={locale} project={project} />
                 </Reveal>

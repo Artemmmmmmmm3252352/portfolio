@@ -46,7 +46,7 @@ export default async function ProjectsPage({
       </Reveal>
 
       <div className="grid projects">
-        {projects.map((project: ProjectView, index) => (
+        {projects.map((project: ProjectView, index: number) => (
           <Reveal key={project.id} delay={120 + index * 70} y={26}>
             <ProjectCard locale={locale} project={project} />
           </Reveal>
