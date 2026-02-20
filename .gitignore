@@ -24,3 +24,9 @@ pnpm-debug.log*
 
 # vercel
 .vercel
+
+# cloudflare
+.open-next
+.wrangler
+.dev.vars
+.env.production

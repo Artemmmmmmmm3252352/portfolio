@@ -1,12 +1,18 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { FormEvent, useEffect, useState } from "react";
 
 export default function AdminLoginPage() {
-  const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [nextPath, setNextPath] = useState("/admin");
+
+  useEffect(() => {
+    const next = new URLSearchParams(window.location.search).get("next");
+    if (next) {
+      setNextPath(next);
+    }
+  }, []);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -46,7 +52,7 @@ export default function AdminLoginPage() {
             required
           />
           <input className="field" type="password" name="password" placeholder="Password" required />
-          <input type="hidden" name="next" value={searchParams.get("next") ?? "/admin"} />
+          <input type="hidden" name="next" value={nextPath} />
           <button className="btn primary" disabled={loading} type="submit">
             {loading ? "Signing in..." : "Sign in"}
           </button>

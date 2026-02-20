@@ -59,6 +59,44 @@ supabase db seed --file supabase/seed/seed.sql
 npm run dev
 ```
 
+## Cloudflare Deployment
+
+For full-stack Next.js (SSR + API routes + admin), deploy with Cloudflare Workers via OpenNext.
+Cloudflare Pages static mode is not enough for this app.
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Build for Cloudflare:
+
+```bash
+npm run cf:build
+```
+
+3. Deploy:
+
+```bash
+npm run cf:deploy
+```
+
+4. In Cloudflare project variables/secrets set:
+
+- `DATABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `ADMIN_LOGIN`
+- `ADMIN_PASSWORD`
+- `ADMIN_SESSION_SECRET`
+- `ADMIN_ALLOWED_EMAILS`
+- `RESEND_API_KEY`
+- `RESEND_FROM_EMAIL`
+
+`wrangler.jsonc` is already configured to use `.open-next/worker.js` and `.open-next/assets`.
+
 ## Notes
 
 - Admin access is restricted by `ADMIN_ALLOWED_EMAILS`.
